@@ -130,5 +130,42 @@
         </p>
 
     </form>
+
+    <script>
+        // 1. Select the form element
+const dataForm = document.getElementById('dataRequestForm');
+
+// 2. Listen for the 'submit' event
+dataForm.addEventListener('submit', async function(event) {
+    // Prevent the page from reloading
+    event.preventDefault();
+
+    // 3. Extract data from the form
+    const formData = new FormData(dataForm);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        // 4. Call the API
+        const response = await fetch('https://privacy-central.securiti.ai/integration/v1/request-submission', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': '16O8w0aNxEr2TzqBybKEJ4Z218mTEwyfm4YicrZk'
+            },
+            "{\"ticket_type\":[\"access\"],\"ticket_type\":[\"access\"],\"user_type\":\"customer\",\"email\":\"itsme.sowmyashree@gmail.com\",\"qid\":\"NA\",\"account_no\":\"123\",\"first_name\":\"sowmya\",\"last_name\":\"shree\",\"dob\":\"\",\"phone\":\"\",\"requestSubject\":\"\",\"requestDetails\":\"\",\"attachments\":[],\"additionalCustomCheckbox\":false}",
+        // 5. Handle the response
+        if (response.ok) {
+            const result = await response.json();
+            alert('Request submitted successfully!');
+            dataForm.reset(); // Clear the form
+        } else {
+            alert('Submission failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while connecting to the server.');
+    }
+});
+    </script>
 </body>
 </html>
